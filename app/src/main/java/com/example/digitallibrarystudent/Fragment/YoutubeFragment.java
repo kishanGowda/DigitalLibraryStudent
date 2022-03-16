@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import android.provider.Browser;
 import android.view.LayoutInflater;
@@ -54,58 +55,41 @@ public class YoutubeFragment extends Fragment {
         textView.setText(title);
 
         WebView webView = view.findViewById(R.id.web_youtube);
-        webView.setWebViewClient(new WebViewClient());
+//        webView.setWebViewClient(new WebViewClient());
+//
+//        webView.getSettings().setSupportZoom(true);
+//        webView.getSettings().setJavaScriptEnabled(true);
+//
+//
+//        webView.loadUrl(link);
 
-        webView.getSettings().setSupportZoom(true);
+        webView.setWebViewClient(new WebViewClient());
+        webView.setWebChromeClient(new FullScreenClient(getActivity()){
+            @Override
+            public void onHideCustomView()
+            {
+                hideFullScreen(webView);
+            }
+            @Override
+            public Bitmap getDefaultVideoPoster()
+            {
+                return videoBitmap();
+            }
+            @Override
+            public void onShowCustomView(View view, WebChromeClient.CustomViewCallback callback)
+            {
+                showFullScreen(view,callback);
+            }
+
+        });
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.setWebViewClient(new Browser());
-        webView.setWebChromeClient(new MyWebClient());
         webView.loadUrl(link);
+
+
 
 
 
         return  view;
     }
-    class Browser
-            extends WebViewClient
-    {
-        Browser() {}
 
-        public boolean shouldOverrideUrlLoading(WebView paramWebView, String paramString)
-        {
-            paramWebView.loadUrl(paramString);
-            return true;
-        }
-    }
-
-    public class MyWebClient
-            extends WebChromeClient
-    {
-        private View mCustomView;
-        private WebChromeClient.CustomViewCallback mCustomViewCallback;
-        protected FrameLayout mFullscreenContainer;
-        private int mOriginalOrientation;
-        private int mOriginalSystemUiVisibility;
-
-        public MyWebClient() {}
-
-        public Bitmap getDefaultVideoPoster()
-        {
-            if (YoutubeFragment.this == null) {
-                return null;
-            }
-            return BitmapFactory.decodeResource(YoutubeFragment.this.getActivity().getResources(), 2130837573);
-        }
-
-        public void onHideCustomView()
-        {
-            ((FrameLayout)YoutubeFragment.this.getView()).removeView(this.mCustomView);
-            this.mCustomView = null;
-            YoutubeFragment.this.getActivity().getWindow().setContentView(this.mOriginalSystemUiVisibility);
-            this.mCustomViewCallback.onCustomViewHidden();
-            this.mCustomViewCallback = null;
-        }
-
-
-    }
 }

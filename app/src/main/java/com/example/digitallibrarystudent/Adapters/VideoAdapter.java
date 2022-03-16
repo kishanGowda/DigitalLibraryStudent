@@ -1,6 +1,7 @@
 package com.example.digitallibrarystudent.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.example.digitallibrarystudent.Fragment.PlayerVideo;
 import com.example.digitallibrarystudent.Fragment.YoutubeFragment;
 import com.example.digitallibrarystudent.Models.VideoModel;
 import com.example.digitallibrarystudent.R;
+import com.example.digitallibrarystudent.Youtube;
 
 import java.util.ArrayList;
 
@@ -58,12 +60,11 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder>
                         link=currentCards.getLink();
                         title=currentCards.getTitle();
                         Log.i("link",link );
-                        Fragment fragment = new YoutubeFragment(link,title);
-                        FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.fragmentContainerView, fragment);
-                        fragmentTransaction.addToBackStack(null);
-                        fragmentTransaction.commit();
+                        Intent intent = new Intent(activity, Youtube.class);
+                        intent.putExtra("key",link);
+                        intent.putExtra("title",title);
+                        activity.startActivity(intent);
+
                     }
                     else
                     {

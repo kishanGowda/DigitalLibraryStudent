@@ -3,6 +3,7 @@ package com.example.digitallibrarystudent.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import com.example.digitallibrarystudent.Fragment.PdfReader;
 import com.example.digitallibrarystudent.Fragment.TopicFragment;
 import com.example.digitallibrarystudent.Models.LecturerModelTwo;
 import com.example.digitallibrarystudent.R;
+import com.example.digitallibrarystudent.Youtube;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
@@ -68,12 +70,18 @@ public class LecturerAdapterTwo extends RecyclerView.Adapter<LecturerAdapterTwo.
               String file=  modal.getFile();
                 Log.i("file", file);
                 String name=modal.getContent();
-                Fragment fragment = new PdfReader(file,name);
-                FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragmentContainerView, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                String link= "https://docs.google.com/viewer?url="+"https://test-digital-library.s3.ap-south-1.amazonaws.com/"+ modal.getFile();
+                String title=modal.getContent();
+                Intent intent = new Intent(context, Youtube.class);
+                intent.putExtra("key",link);
+                intent.putExtra("title",title);
+                context.startActivity(intent);
+//                Fragment fragment = new PdfReader(file,name);
+//                FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.replace(R.id.fragmentContainerView, fragment);
+//                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.commit();
             }
         });
 

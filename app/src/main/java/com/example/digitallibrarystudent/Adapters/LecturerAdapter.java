@@ -1,6 +1,7 @@
 package com.example.digitallibrarystudent.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.digitallibrarystudent.Fragment.PdfReader;
 import com.example.digitallibrarystudent.Models.LecturerModel;
 import com.example.digitallibrarystudent.R;
+import com.example.digitallibrarystudent.Youtube;
 
 import java.util.ArrayList;
 
@@ -52,12 +54,12 @@ public class LecturerAdapter extends RecyclerView.Adapter<LecturerAdapter.ViewHo
                 String file=  currentCards.getFile();
                 Log.i("file", file);
                 String name=currentCards.getTopicName();
-                Fragment fragment = new PdfReader(file,name);
-                FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragmentContainerView, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                String link= "https://docs.google.com/viewer?url="+"https://test-digital-library.s3.ap-south-1.amazonaws.com/"+ currentCards.getFile();
+                String title=currentCards.getTopicName();
+                Intent intent = new Intent(activity, Youtube.class);
+                intent.putExtra("key",link);
+                intent.putExtra("title",title);
+                activity.startActivity(intent);
             }
         });
 
