@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -46,6 +47,7 @@ public class MainFragment extends Fragment {
     Retrofit retrofit;
     int length=0;
     LoginService loginService;
+    private static final String TAG = "MainFragment";
     VideoAdapter videoAdapter;
     SubjectAdapter subjectAdapter;
     RecyclerView recyclerView, recyclerViewVideo,recyclerViewQuestion,recyclerViewSubject;
@@ -77,6 +79,21 @@ public class MainFragment extends Fragment {
         apiInit();
         getStudHomeP();
         getSubject();
+
+        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.refreshHomePage);
+        swipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        apiInit();
+                        getStudHomeP();
+                        getSubject();
+                       
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+        );
+
 
         return view;
     }
@@ -125,8 +142,7 @@ public class MainFragment extends Fragment {
                 }else{
                     videoModels=new ArrayList<>();
                     for (int j=0;j<=overAllStateResponse.video.size()-1;j++){
-
-                        videoModels.add(new VideoModel(R.drawable.mapchem,overAllStateResponse.video.get(j).topic.name,overAllStateResponse.video.get(j).chapter.name,overAllStateResponse.video.get(j).subject.name,overAllStateResponse.video.get(j).link,overAllStateResponse.video.get(j).title,overAllStateResponse.video.get(j).status,overAllStateResponse.video.get(j).file));
+                        videoModels.add(new VideoModel(R.drawable.twosizevideo,overAllStateResponse.video.get(j).topic.name,overAllStateResponse.video.get(j).chapter.name,overAllStateResponse.video.get(j).subject.name,overAllStateResponse.video.get(j).link,overAllStateResponse.video.get(j).title,overAllStateResponse.video.get(j).status,overAllStateResponse.video.get(j).file));
                     }
                     buildVideo();
                 }
@@ -164,7 +180,7 @@ public class MainFragment extends Fragment {
 
                 int length=0;
                       length=  response1.subjects.size();
-                Log.i("hh", String.valueOf(length));
+                Log.i("hh", String.valueOf(response1.subjects.get(0).chapterCount));
                 for(int i=0;i<=length-1;i++){
                     subjectModels.add(new SubjectModel(response1.subjects.get(i).subjects_name,String.valueOf(response1.subjects.get(i).chapterCount),Integer.valueOf(response1.subjects.get(i).notesCount),
                            Integer.valueOf( response1.subjects.get(i).videoCount),Integer.valueOf(response1.subjects.get(i).quesBankCount),response1.subjects.get(i).subjects_id,R.drawable.sbj_chemistry));
@@ -175,6 +191,7 @@ public class MainFragment extends Fragment {
             }
             @Override
             public void onFailure(Call<OverAllStateResponse> call, Throwable t) {
+                Log.i(TAG, "onFailure: "+t.getMessage());
                 Toast.makeText(getContext(), "Error fail in home page", Toast.LENGTH_SHORT).show();
             }
         });

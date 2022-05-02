@@ -88,20 +88,20 @@ public class QuestionBackFragment extends Fragment {
                 }
                 getLibraryResponse = response.body();
                 ArrayList<Content> contents = getLibraryResponse.contents;
- //               int length = contents.size();
+                int length = contents.size();
 
 
-//                Log.i("si", String.valueOf(length));
-//                if (length == 0) {
-//                    noQuestion.setVisibility(View.VISIBLE);
-//                } else {
-//                    questionModels = new ArrayList<>();
-//                    for (int i = 0; i <= length - 1; i++) {
-//                        questionModels.add(new QuestionModelTwo(getLibraryResponse.contents.get(i).title,getLibraryResponse.contents.get(i).file));
-//
-//                    }
-//                    buildR();
-//                }
+                Log.i("si", String.valueOf(length));
+                if (length == 0) {
+                    noQuestion.setVisibility(View.VISIBLE);
+                } else {
+                    questionModels = new ArrayList<>();
+                    for (int i = 0; i <= length - 1; i++) {
+                        questionModels.add(new QuestionModelTwo(getLibraryResponse.contents.get(i).title,getLibraryResponse.contents.get(i).file));
+
+                    }
+                    buildR();
+                }
             }
 
             @Override

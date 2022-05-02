@@ -18,5 +18,48 @@
         android:id="@+id/chapterFragment"
         android:name="com.example.digitallibrarystudent.Fragment.ChapterFragment"
         android:label="fragment_chapter"
-        tools:layout="@layout/fragment_chapter" />
+        tools:layout="@layout/fragment_chapter" >
+        <action
+            android:id="@+id/action_chapterFragment_to_topicFragment"
+            app:destination="@id/topicFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/topicFragment"
+        android:name="com.example.digitallibrarystudent.Fragment.TopicFragment"
+        android:label="fragment_topic"
+        tools:layout="@layout/fragment_topic" >
+        <action
+            android:id="@+id/action_topicFragment_to_libraryFragment"
+            app:destination="@id/libraryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/libraryFragment"
+        android:name="com.example.digitallibrarystudent.Fragment.LibraryFragment"
+        android:label="fragment_library"
+        tools:layout="@layout/fragment_library" >
+        <action
+            android:id="@+id/action_libraryFragment_to_libraryLecture"
+            app:destination="@id/libraryLecture" />
+        <action
+            android:id="@+id/action_libraryFragment_to_videosFragment"
+            app:destination="@id/videosFragment" />
+        <action
+            android:id="@+id/action_libraryFragment_to_questionBackFragment"
+            app:destination="@id/questionBackFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/libraryLecture"
+        android:name="com.example.digitallibrarystudent.Fragment.LibraryLecture"
+        android:label="fragment_library_lecture"
+        tools:layout="@layout/fragment_library_lecture" />
+    <fragment
+        android:id="@+id/videosFragment"
+        android:name="com.example.digitallibrarystudent.Fragment.VideosFragment"
+        android:label="fragment_videos"
+        tools:layout="@layout/fragment_videos" />
+    <fragment
+        android:id="@+id/questionBackFragment"
+        android:name="com.example.digitallibrarystudent.Fragment.QuestionBackFragment"
+        android:label="fragment_question_back"
+        tools:layout="@layout/fragment_question_back" />
 </navigation>

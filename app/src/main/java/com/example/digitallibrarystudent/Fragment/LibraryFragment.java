@@ -120,9 +120,9 @@ TextView topic;
                 pa.setAdapter(sa);
                 TabLayout tabLayout = view.findViewById(R.id.tabLayout);
                 //
-                tabLayout.addTab(tabLayout.newTab().setText(String.valueOf("Lecturer("+notes+")")));
+                tabLayout.addTab(tabLayout.newTab().setText(String.valueOf("Lecture   notes("+notes+")")));
                 tabLayout.addTab(tabLayout.newTab().setText(String.valueOf("videos("+video+")")));
-                tabLayout.addTab(tabLayout.newTab().setText(String.valueOf("Question("+question+")")));
+                tabLayout.addTab(tabLayout.newTab().setText(String.valueOf("Question   banks("+question+")")));
                 //
                 tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                     @Override
